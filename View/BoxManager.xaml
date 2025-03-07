@@ -1,0 +1,127 @@
+﻿<Window x:Class="GPMI_Laser_Marking.View.BoxManager"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GPMI_Laser_Marking.View"
+        mc:Ignorable="d"
+        FontSize="11"
+        Title="Box Manager" Height="600" Width="1280">
+    <Grid>
+        <Grid.Resources>
+            <GridViewColumnCollection x:Key="Columns">
+                <GridViewColumn Header="Box No" DisplayMemberBinding="{Binding Box_no}"/>
+                <GridViewColumn Header="QR Code ID" DisplayMemberBinding="{Binding QRCODE_ID}"/>
+                <GridViewColumn Header="Current PCS" DisplayMemberBinding="{Binding CurrentPCS}"/>
+                <GridViewColumn Header="PCS in Box" DisplayMemberBinding="{Binding pcs_in_box}"/>
+                <GridViewColumn Header="Status" DisplayMemberBinding="{Binding paStatus}"/>
+            </GridViewColumnCollection>
+            <Style TargetType="Border"  >
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="CornerRadius" Value="5"/>
+                <Setter Property="Margin" Value="2"/>
+            </Style>
+            <Style TargetType="StackPanel"  >
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="Margin" Value="2"/>
+            </Style>
+            <Style TargetType="TextBox"  >
+                <Setter Property="MinWidth" Value="250"/>
+                <Setter Property="VerticalAlignment" Value="Stretch"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="Margin" Value="2"/>
+            </Style>
+            <Style TargetType="TextBlock"  >
+                <Setter Property="MinWidth" Value="250"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="Margin" Value="15 2 2 2"/>
+            </Style>
+        </Grid.Resources>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="520"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Border  >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock>Order No</TextBlock>
+                <TextBox Name="OrderNo_txt" Margin="5" FontWeight="Bold" IsReadOnly="True" Foreground="Blue" KeyDown="OrderNo_txt_KeyDown"  ></TextBox>
+                <TextBlock Grid.Row="1">Packaging ID</TextBlock>
+                <TextBox Grid.Row="1" Name="PackagingID_txt" Margin="5" FontWeight="Bold" IsReadOnly="True" ></TextBox>
+                <Button Grid.Row="0" Padding="3" Margin="5" Width="100" HorizontalAlignment="Right" x:Name="ChooseBox_btn" Click="ChooseBox_btn_Click" >Choose Box</Button>
+                <Button Grid.Row="1" Padding="3" Margin="5" Width="100" HorizontalAlignment="Right" x:Name="UnBoxAll_btn" Click="UnBoxAll_btn_Click" >Un Box All Items</Button>
+                <ListView x:Name="Packaging_lbx"  SelectedItem="{Binding SelectedItem}" ItemsSource="{Binding Items}"  SelectionChanged="Packaging_lbx_SelectionChanged" Grid.Row="2" Margin="3">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Box No" DisplayMemberBinding="{Binding Box_no}" Width="45" />
+                            <GridViewColumn Header="QR Code ID" DisplayMemberBinding="{Binding QRCODE_ID}" Width="Auto"/>
+                            <GridViewColumn Header="Current Qty" DisplayMemberBinding="{Binding CurrentPCS}" Width="63"/>
+                            <GridViewColumn Header="Qty in Box" DisplayMemberBinding="{Binding pcs_in_box}" Width="63"/>
+                            <GridViewColumn Header="Status" DisplayMemberBinding="{Binding paStatus}" Width="63"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+
+        </Border>
+
+        <Border  Grid.Column="1" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="150"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock>Part ID</TextBlock>
+                    <TextBox Name="SeletedPartID_txt" Padding="3" VerticalAlignment="Center" Grid.Column="1" IsReadOnly="True" Width="150"></TextBox>
+                    <Button Margin="5" Grid.Column="2" Click="UnBox1Part_Click" Padding="3">UnBox Seleted Part ID</Button>
+                    <Button Margin="5" Grid.Column="3" Click="UnBoxNGPart_Click" Padding="3">Delete Seleted Part ID</Button>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="150"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock>Replace it with another Part ID</TextBlock>
+                    <TextBox Name="Replace_Part_txt" KeyDown="Replace_Enter" Padding="3" VerticalAlignment="Center" Grid.Column="1"  Width="150"></TextBox>
+                    <Button Click="Replace_Click" Margin="5" Grid.Column="2" Padding="3">Replace</Button>
+
+                </Grid>
+                <ListView Name="PartID_lbx"  SelectedItem="{Binding SelectedOItem}"  ItemsSource="{Binding OItems}" LostFocus="PartID_lbx_LostFocus" SelectionChanged="PartID_lbx_SelectionChanged" Grid.Row="2" Margin="3">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Part ID" DisplayMemberBinding="{Binding Part_ID}" Width="Auto" />
+                            <GridViewColumn Header="Part Number" DisplayMemberBinding="{Binding Part_Number}" Width="110"/>
+                            <GridViewColumn Header="Order No" DisplayMemberBinding="{Binding Order_No}" Width="120"/>
+                            <GridViewColumn Header="Part Name" DisplayMemberBinding="{Binding Part_Name}" Width="150"/>
+                            <GridViewColumn Header="Version" DisplayMemberBinding="{Binding Version}" Width="45"/>
+                            <GridViewColumn Header="Date Time Marking" DisplayMemberBinding="{Binding Date_Time_Marking}" Width="120"/>
+                            <GridViewColumn Header="Date Time FQA" DisplayMemberBinding="{Binding Date_Time_FQA}" Width="120"/>
+                            <GridViewColumn Header="Date Time Packed" DisplayMemberBinding="{Binding Date_Time_Pakaging}" Width="120"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+            
+        </Border>
+    </Grid>
+</Window>

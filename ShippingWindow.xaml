@@ -1,0 +1,246 @@
+﻿<Window x:Class="GPMI_Laser_Marking.ShippingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GPMI_Laser_Marking"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        Title="ShippingWindow" Height="800" Width="1280" Closed="Window_Closed">
+    <Grid Background="{DynamicResource Taskbar}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <!--Header View-->
+        <Grid Grid.Row="0" Background="{DynamicResource Taskbar}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Viewbox Width="48" Height="48">
+                    <Canvas Width="24" Height="24">
+                        <Path x:Name="PathIcon" Fill="Black" Data="M18 18.5C18.83 18.5 19.5 17.83 19.5 17C19.5 16.17 18.83 15.5 18 15.5C17.17 15.5 16.5 16.17 16.5 17C16.5 17.83 17.17 18.5 18 18.5M19.5 9.5H17V12H21.46L19.5 9.5M6 18.5C6.83 18.5 7.5 17.83 7.5 17C7.5 16.17 6.83 15.5 6 15.5C5.17 15.5 4.5 16.17 4.5 17C4.5 17.83 5.17 18.5 6 18.5M20 8L23 12V17H21C21 18.66 19.66 20 18 20C16.34 20 15 18.66 15 17H9C9 18.66 7.66 20 6 20C4.34 20 3 18.66 3 17H1V6C1 4.89 1.89 4 3 4H17V8H20M3 6V15H3.76C4.31 14.39 5.11 14 6 14C6.89 14 7.69 14.39 8.24 15H15V6H3M5 10.5L6.5 9L8 10.5L11.5 7L13 8.5L8 13.5L5 10.5Z"  />
+                    </Canvas>
+                </Viewbox>
+                <TextBlock Margin="20 0" Text="GPMI SHIPPING STATION" Style="{StaticResource HeaderTextBlock}" Foreground="Black"/>
+
+            </StackPanel>
+
+
+            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" >
+                <Grid Margin="5 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock VerticalAlignment="Center" Margin="10 0" x:Name="ID_tbx" FontSize="15"></TextBlock>
+                    <TextBlock Grid.Row="1" VerticalAlignment="Center" Margin="10 0" x:Name="Name_tbx" FontSize="15"></TextBlock>
+                </Grid>
+            </StackPanel>
+        </Grid>
+
+        <!--Header View-->
+
+        <!--Main View-->
+        <Border Grid.Row="1" Background="{StaticResource TEMAS_LIGHT_GREY}" CornerRadius="15" Margin="5 0">
+            <Grid Margin="5">
+
+                <Grid.Resources>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource NormalTextBlock}"/>
+                    <Style TargetType="TextBox" BasedOn="{StaticResource NormalTextBox}"/>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="1.5*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="1" Margin="5" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="7*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Output History" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                    <DataGrid x:Name="Output_Grid" BorderThickness="2"  Grid.Row="2" FontSize="15" AutoGenerateColumns="False" CanUserAddRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="QR Code ID" Width="3*" Binding="{Binding QR_CodeID}"/>
+                            <DataGridTextColumn Header="QR Code ID" Width="3*" Binding="{Binding Shipping_Code}"/>
+                            <DataGridTextColumn Header="Date Time" Width="1.5*" Binding="{Binding Date_Time_Shipping}"/>
+                            <DataGridTextColumn Header="Ship Account" Width="*" Binding="{Binding Shipping_Code_Account}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <!--Main View Left-->
+                    <Border Margin="5" CornerRadius="10" BorderThickness="1" BorderBrush="Black">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Order Input Infomation" FontWeight="Bold" FontSize="25"/>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Part Number"/>
+                                <TextBlock x:Name="PartNumber_tbx" Grid.Column="1"/>
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Part Name"/>
+                                <TextBlock x:Name="PartName_tbx" Grid.Column="1"/>
+                            </Grid>
+                            <Grid Grid.Row="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Order No"/>
+                                <TextBlock x:Name="OrderNo_tbx" Grid.Column="1"/>
+                            </Grid>
+                            <Grid Grid.Row="4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Quantity Box"/>
+                                <TextBlock x:Name="Quantity_tbx" Grid.Column="1"/>
+                            </Grid>
+                            <Grid Grid.Row="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Pcs in box"/>
+                                <TextBlock x:Name="Pcs_tbx" Grid.Column="1"/>
+                            </Grid>
+                        </Grid>
+
+                    </Border>
+                    <!--Main View Left-->
+
+                    <!--Main View Right-->
+                    <Border Grid.Column="1" Margin="5" CornerRadius="10" BorderThickness="1" BorderBrush="Black">
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="1.5*"/>
+                                <RowDefinition Height="1.5*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="PAKAGING Comfirm" 
+                                   HorizontalAlignment="Center" 
+                                   VerticalAlignment="Top"
+                                   FontSize="25"
+                                   FontWeight="Bold"/>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="4*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="QR Code ID" HorizontalAlignment="Center" Foreground="Green" FontWeight="Bold"/>
+                                <TextBox x:Name="QRCode_ID_txt" IsEnabled="False" Style="{StaticResource BarcodeTextbox}" FontSize="25" Grid.Column="1" KeyDown="QRCode_ID_txt_KeyDown"  />
+
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="5*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Shipping ID"  FontWeight="Bold"  HorizontalAlignment="Center"/>
+                                <TextBox x:Name="ShippingID_txt"  FontSize="25" Grid.Column="1" IsEnabled="False"  FontStyle="Italic" Margin="10 0" KeyDown="ShippingID_KeyDown"/>
+                            </Grid>
+                            <Grid Grid.Row="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Canvas>
+                                    <TextBlock Text="Boxes" HorizontalAlignment="Left" Canvas.Left="278" Canvas.Top="12" />
+
+                                    <TextBlock Text="Shipped Count" HorizontalAlignment="Left" Canvas.Left="46" Canvas.Top="10" />
+                                    <TextBlock Text="" Canvas.Left="329" Canvas.Top="12" HorizontalAlignment="Left" />
+                                    <TextBox x:Name="Count_txt" Width="80" Canvas.Left="168" HorizontalAlignment="Left" Canvas.Top="10" VerticalAlignment="Top"/>
+                                </Canvas>
+                                <Button x:Name="ChangeShipping_btn" FontSize="18" Margin="10 5" Grid.Column="1" Click="ChangeShipping_btn_Click">Change ShippingCode</Button>
+                                <Button x:Name="ChangeFinish_btn" FontSize="18" Margin="10 5" Grid.Column="2" Click="ChangeFinish_btn_Click" IsEnabled="False">Change Finish</Button>
+
+                            </Grid>
+
+
+                        </Grid>
+                    </Border>
+
+
+                    <!--Main View Right-->
+                    <!--<StackPanel >
+                        <TextBox x:Name="NCU_txt" Text="{Binding NCU}" />
+                        <TextBox x:Name="SoPO_txt" Text="{Binding MSoPO}" />
+                        <TextBox x:Name="MaSP_txt" Text="{Binding MaSP}" />
+                        <TextBox x:Name="ReviewBV_txt" Text="{Binding ReviewBV}" />
+                        <TextBox x:Name="MaKhac_txt" >
+                            <MultiBinding StringFormat="{}{0}{1}{2}{3}">
+                                <Binding Path="NCU" Mode="OneWayToSource" />
+                                <Binding Path="MSoPO" Mode="OneWay" />
+                                <Binding Path="MaSP" Mode="OneWay" />
+                                <Binding Path="ReviewBV" Mode="OneWay" />
+                            </MultiBinding>
+                        </TextBox>
+                        <Button x:Name="button" Content="Button" Click="button_Click"/>
+                    </StackPanel>-->
+                    <!--<Button Grid.Row="7" Width="150"
+                            Height="35"
+                            Command="{Binding PowerCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Status" />
+                            <Rectangle Margin="5,2,0,0"
+                            Width="10"
+                            Height="10"
+                            Fill="{Binding PowerFill}" />
+                            <AccessText Margin="25,0,0,0"
+                            Text="{Binding PowerText}" />
+                        </StackPanel>
+                    </Button>-->
+                </Grid>
+
+            </Grid>
+
+        </Border>
+        <!--Main View-->
+
+        <!--TaskBar View -->
+        <Grid Grid.Row="2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel HorizontalAlignment="Center" Grid.Column="1" Orientation="Horizontal" Margin="5">
+                <Button Margin="10 0"  Style="{DynamicResource ButtonInfo}" />
+            </StackPanel>
+        </Grid>
+        <!--TaskBar View -->
+    </Grid>
+
+</Window>

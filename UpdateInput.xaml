@@ -1,0 +1,110 @@
+﻿<Window x:Class="GPMI_Laser_Marking.UpdateInput"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GPMI_Laser_Marking"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="UpdateInput" Height="450" Width="500">
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="TextBlock" BasedOn="{StaticResource NormalTextBlock}">
+                <Setter Property="FontStyle" Value="Italic"/>
+            </Style>
+            <Style TargetType="TextBox" BasedOn="{StaticResource NormalTextBox}" >
+                <Setter Property="Foreground" Value="Blue"/>
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.ColumnSpan="2">
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock>Part Number</TextBlock>
+                <TextBox x:Name="Part_Number" Grid.Column="1" KeyDown="Part_Number_KeyDown"></TextBox>
+            </Grid>
+        </Grid>
+        <Grid x:Name="Grid_info" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="1.5*"/>
+            </Grid.RowDefinitions>
+            
+            <TextBlock FontWeight="Black">Order Infomation</TextBlock>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock>Part Name</TextBlock>
+                <TextBox x:Name="Part_Name" Grid.Column="1" IsEnabled="False"></TextBox>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock>Order No</TextBlock>
+                <TextBox x:Name="Order_No" Grid.Column="1" IsEnabled="False"></TextBox>
+            </Grid>
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock>Order Date</TextBlock>
+                <TextBox x:Name="Order_date" Grid.Column="1" IsEnabled="False"></TextBox>
+            </Grid>
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock>Order Quantity</TextBlock>
+                <TextBox x:Name="Order_Quantity" Grid.Column="1" Background="#FFC3FBD8"/>
+            </Grid>
+            <Grid Grid.Row="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock>Pcs / Box</TextBlock>
+                <TextBox x:Name="Pcs_Box" Grid.Column="1" IsEnabled="False"></TextBox>
+            </Grid>
+            <Grid Grid.Row="6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock>Vendor Code</TextBlock>
+                <TextBox x:Name="Vendor_Code" Grid.Column="1" IsEnabled="False"></TextBox>
+            </Grid>
+            <Grid Grid.Row="7">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock>Version</TextBlock>
+                <TextBox x:Name="Version" Grid.Column="1" IsEnabled="False"></TextBox>
+            </Grid>
+            <Button x:Name="Save_btn" Margin="100 10" HorizontalAlignment="Stretch" FontSize="20" Grid.Row="8"  Click="Save_btn_Click" Content="Update"/>
+
+        </Grid>
+
+    </Grid>
+</Window>

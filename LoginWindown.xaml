@@ -1,0 +1,72 @@
+﻿<Window x:Class="GPMI_Laser_Marking.LoginWindown"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GPMI_Laser_Marking"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        FontSize="15"
+        WindowStartupLocation="CenterScreen"
+        Title="LoginWindown" Height="400" Width="700">
+    
+    <Grid Background="{DynamicResource Taskbar}">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="DarkCyan">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+       
+            </Grid.ColumnDefinitions>
+            <Grid>
+                
+            </Grid>
+            <Border CornerRadius="10">
+                <Image Margin=" 15 5" Grid.Column="0" HorizontalAlignment="Left" Source="/gpmi.ico"/>
+            </Border>
+            <TextBlock Grid.Column="1" Foreground="White" Text="GPMI" FontWeight="Black" FontSize="39" Style="{StaticResource HeaderTextBlock}"/>
+            <StackPanel Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Grid Margin="5 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Foreground="Wheat" VerticalAlignment="Center" Margin="10 0" x:Name="ID_tbx"></TextBlock>
+                    <TextBlock Foreground="Wheat" Grid.Row="1" VerticalAlignment="Center" Margin="10 0" x:Name="Name_tbx"></TextBlock>
+                </Grid>
+                <Button x:Name="ServerSettingbtn" Style="{StaticResource ButtonSetting}" Margin="5" Click="ServerSettingbtn_Click" />
+                <Button x:Name="Login_btn" Style="{StaticResource ButtonAccount}" Margin="5" Click="Login_btn_Click"/>
+                <Button x:Name="Shutdown" Style="{StaticResource Button_Shutdown}" Margin="5" Click="Shutdown_Click"/>
+
+            </StackPanel>
+        </Grid>
+        <Border Margin="10 0 10 10"  CornerRadius="20" Grid.Row="1" Background="{StaticResource TEMAS_LIGHT_GREY}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Button x:Name="laser_btn" IsEnabled="False"  Margin=" 10 10 10 5 " Style="{StaticResource Button_1}" Grid.Row="0" Click="Button_Click"></Button>
+                <Button x:Name="FQA_btn" Margin="10 5" Style="{StaticResource Button_2}" Grid.Row="1" Click="Button_Click_1" IsEnabled="False"></Button>
+                <Button x:Name="Pakaging_btn" Margin="10 5" Style="{StaticResource Button_3}" Grid.Row="2" Click="Button_Click_2" IsEnabled="False"></Button>
+                <Button x:Name="Shipping_btn" Margin="10 5" Style="{StaticResource Button_Shipping}" Grid.Row="3" IsEnabled="False" Click="Shipping_btn_Click"></Button>
+                <Button x:Name="import_btn" Margin=" 10 10 10 5 " Style="{StaticResource Button_Import_input}" Grid.Row="0" Grid.Column="1" Content="Input Order" IsEnabled="False" Click="Import_btn_Click"></Button>
+                <Button x:Name="update_btn" Margin=" 10 5 10 10 " Style="{StaticResource Button_Update_input}" Grid.Row="1" Grid.Column="1" Content="Packaging Manager" IsEnabled="False" Click="Update_btn_Click"></Button>
+                <Button x:Name="TraceabilityBtn" Margin=" 10 5 10 10 " Style="{StaticResource Button_Traceability}" Grid.Row="2" Grid.Column="1" Content="Traceability Part" Click="TraceabilityBtn_Click"/>
+                <Button x:Name="account_btn" Margin=" 10 5 10 10 " Style="{StaticResource Button_4}" Grid.Row="3" Grid.Column="1" IsEnabled="False" Click="Account_btn_Click"></Button>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

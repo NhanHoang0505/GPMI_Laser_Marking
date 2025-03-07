@@ -1,0 +1,302 @@
+﻿<Window x:Class="GPMI_Laser_Marking.PackagingWindown"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:gpmi_laser_marking="clr-namespace:GPMI_Laser_Marking" 
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        mc:Ignorable="d"
+        FontSize="15"
+
+        Title="PACKAGING STATION ( Trạm đóng gói ) " Height="800" Width="1280" Closed="Window_Closed">
+
+    <Grid Background="{DynamicResource Taskbar}">
+        <Grid.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="Margin" Value="5" />
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="45" />
+        </Grid.RowDefinitions>
+        <!--Header View-->
+
+        <!--Header View-->
+
+        <!--Main View-->
+        <Border Grid.Row="1" Background="{StaticResource TEMAS_LIGHT_GREY}">
+            <Grid Margin="5">
+                <Grid.Resources>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource NormalTextBlock}" />
+                    <Style TargetType="TextBox" BasedOn="{StaticResource NormalTextBox}" />
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="280" />
+                    <RowDefinition Height="1.5*" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="1" Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="8*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock FontWeight="Bold" Text="Output History" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" />
+                    <DataGrid x:Name="Output_Grid" BorderThickness="2"  Grid.Row="2"  AutoGenerateColumns="False" CanUserAddRows="False" LoadingRow="Output_Grid_LoadingRow">
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="LightBlue"/>
+                                <Setter Property="Height" Value="30"/>
+                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="Padding" Value="5 0"/>
+                                <Setter Property="BorderThickness" Value="1"/>
+                                <Setter Property="BorderBrush" Value="Black"/>
+
+                            </Style>
+                            <Style TargetType="DataGridRowHeader">
+                                <Setter Property="MinWidth" Value="30"/>
+                            </Style>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="Padding" Value="5 0"/>
+                                <Setter Property="BorderThickness" Value="3"/>
+                            </Style>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Part ID" Width="3*" Binding="{Binding Part_ID}" />
+                            <DataGridTextColumn Header="QR Code ID" Width="3*" Binding="{Binding QR_CodeID}" />
+                            <!--<DataGridTextColumn Header="Pakaging Status" Width="*" Binding="{Binding Status}" />-->
+                            <DataGridTextColumn Header="Box No" Width="0.5*" Binding="{Binding Box_No}" />
+                            <DataGridTextColumn Header="Date Time" Width="1.5*" Binding="{Binding Date_Time_Pakaging}" />
+                            <DataGridTextColumn Header="Pakaging Account" Width="*" Binding="{Binding Pakaging_Account}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.7*" />
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="250" />
+                    </Grid.ColumnDefinitions>
+                    <Border Margin="3" CornerRadius="5" BorderThickness="1" Grid.Column="2" BorderBrush="Black">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Button x:Name="changeimagebtn" Content="Change Image" FontSize="20" Margin="5" Click="changeimagebtn_Click" />
+                            <Image x:Name="image_printer" Grid.Row="1" Margin="5" Stretch="Fill" />
+                        </Grid>
+                    </Border>
+                    <!--Main View Left-->
+                    <Border Margin="3" CornerRadius="5" BorderThickness="1" BorderBrush="Black">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="45" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="35" />
+                            </Grid.RowDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="Order Information" FontWeight="Bold" FontSize="22" />
+                                <TextBlock Text="Thông tin Order " FontWeight="Bold" FontSize="9" />
+                            </StackPanel>
+                            
+                            <Button Grid.Row="7" x:Name="ChangeCode_btn"  Content="Change Order No ( Đổi Order No khác)"  Width="280"  Margin="2" Click="ChangeCode_btn_Click" />
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="110" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Order No" />
+                                <TextBox x:Name="ReadOrderNo_txt"  Grid.Column="1" Style="{StaticResource BarcodeTextbox}" KeyDown="Read_OrderNo_txt_KeyDown" IsEnabled="False">
+                                </TextBox>
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="110" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Part Number" />
+                                <TextBlock x:Name="PartNumber_tbx" Grid.Column="1" />
+                            </Grid>
+                            <Grid Grid.Row="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="110" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Part Name" />
+                                <TextBlock x:Name="PartName_tbx" Grid.Column="1" />
+                            </Grid>
+                            <Grid Grid.Row="4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="110" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Quantity" />
+                                <TextBlock x:Name="Quantity_tbx" Grid.Column="1" />
+                            </Grid>
+                            <Grid Grid.Row="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="110" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Pcs in box" />
+                                <TextBlock x:Name="Pcs_in_tbl" Grid.Column="1" />
+                            </Grid>
+                            <Grid Grid.Row="6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="110" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Revision" />
+                                <TextBlock x:Name="Revision_tbx" Grid.Column="1" />
+                            </Grid>
+                        </Grid>
+                    </Border>
+                    <!--Main View Left-->
+
+                    <!--Main View Right-->
+                    <Border Grid.Column="1" Margin="3" CornerRadius="5" BorderThickness="1" BorderBrush="Black">
+                        <Grid x:Name="PartGird" Grid.Column="1" IsEnabled="False">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="50" />
+                                <RowDefinition Height="50" />
+                                <RowDefinition Height="2.5*" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Input PartID  ( Nhập PartID )"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Top"
+                                   FontSize="22"
+                                   FontWeight="Bold" />
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="5*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Part ID" HorizontalAlignment="Center" Foreground="Green" FontWeight="Bold" />
+                                <TextBox x:Name="Part_ID_txt" Style="{StaticResource BarcodeTextbox}" Height="35" FontSize="22" Grid.Column="1"  GotFocus="CheckOK_txt_GotFocus" KeyDown="Add_PartID_txt_Keydown" />
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="5*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="QR Code ID"  FontWeight="Bold" />
+                                <TextBox Background="WhiteSmoke" x:Name="QR_CODE_ID_txt" Margin="10 0" FontSize="25" Grid.Column="1" IsReadOnly="True" Foreground="Blue" FontStyle="Italic">
+                                </TextBox>
+                            </Grid>
+                            <Grid Grid.Row="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*" />
+                                    <ColumnDefinition Width="200" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Border BorderBrush="Black" Margin="50 5 5 2" BorderThickness="1" CornerRadius="3">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="200" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel  Grid.Column="0" VerticalAlignment="Center">
+                                            <TextBlock  Text="Number of pcs in box :" />
+                                            <TextBlock FontSize="9" Text="Số lượng sản phảm trong box :" />
+                                        </StackPanel>
+                                        <TextBlock Grid.Column="1" x:Name="CurrentPcs" Foreground="Blue" FontWeight="Black" />
+                                    </Grid>
+
+                                </Border >
+                                <Border BorderBrush="Black" Margin="50 2 5 2" BorderThickness="1" Grid.Row="1"  CornerRadius="3">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="200" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel  Grid.Column="0" VerticalAlignment="Center">
+                                            <TextBlock Text="Packed Quantity :  " />
+                                            <TextBlock FontSize="9" Text="Số lượng sản phảm đã đóng gói" />
+                                        </StackPanel>
+                                        <TextBlock Grid.Column="1" x:Name="TotalCount_tbl" Foreground="Blue" Text="$$" FontWeight="Black" />
+                                    </Grid>
+
+                                </Border>
+                                <Border BorderBrush="Black" Margin="50 2 5 5" BorderThickness="1" Grid.Row="2 " CornerRadius="3">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="200" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel  Grid.Column="0" VerticalAlignment="Center">
+                                            <TextBlock Text="Box No :" Margin="10 0" />
+                                            <TextBlock FontSize="9" Text="Box hiện tại" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center" >
+
+                                            <TextBlock x:Name="Current_Box_txt" Text="$$"  Foreground="Blue" FontWeight="Black" />
+                                            <TextBlock Text="of"  Margin=" 5 0" />
+                                            <TextBlock x:Name="AllBox_tbx" Text="$$" />
+                                        </StackPanel>
+                                    </Grid>
+
+                                </Border>
+                                    <StackPanel VerticalAlignment="Center" Grid.RowSpan="3" Margin="5"  Grid.Column="2">
+                                    <Button Opacity="0.3" x:Name="Print_Finish_btn"  Style="{StaticResource Button_PrintFinish}"  HorizontalAlignment="Center" Click="Print_Finish_btn_Click" Height="50" />
+                                    <TextBlock FontSize="12">Move to the next box</TextBlock>
+                                    <TextBlock FontSize="9">Chuyển sang box tiếp theo</TextBlock>
+                                    <Button VerticalAlignment="Bottom" Margin="5 15 5 0" Click="BoxManager_Button_Click">
+                                        <Button.ContentTemplate>
+                                            <DataTemplate>
+                                                <StackPanel>
+                                                    <TextBlock Text="Box Manager"/>
+                                                    <TextBlock HorizontalAlignment="Center" FontSize="9" Text="Quản lý Thùng"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </Button.ContentTemplate>
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Border>
+        <!--Main View-->
+
+        <!--TaskBar View -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="150" />
+            </Grid.ColumnDefinitions>
+            <StackPanel HorizontalAlignment="Center" Grid.Column="1" Orientation="Horizontal" Margin="5">
+                <Button x:Name="Print_btn" Content="  Print" Style="{StaticResource Button_Print}" Click="Print_btn_Click" />
+                <Button Margin="20 0" x:Name="PrintView_btn" Content="Preview" Style="{StaticResource Button_Print}"
+                       Click="PrintView_btn_Click" />
+                <StackPanel >
+                    <TextBlock Margin="0" >Set Printer</TextBlock>
+                    <TextBlock Margin="0" FontSize="9" HorizontalAlignment="Center">Chọn máy in</TextBlock>
+                </StackPanel>
+                
+                <ComboBox Name="printes" MinWidth="160"  Margin="3" SelectionChanged="printes_SelectionChanged" />
+            </StackPanel>
+            <TextBlock Grid.Column="3" Margin="15 0" HorizontalAlignment="Right" x:Name="ID_tbx" >Account :</TextBlock>
+        </Grid>
+        <!--TaskBar View -->
+    </Grid>
+</Window>

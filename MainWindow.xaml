@@ -1,0 +1,351 @@
+﻿<Window x:Class="GPMI_Laser_Marking.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GPMI_Laser_Marking"
+        xmlns:context ="clr-namespace:GPMI_Laser_Marking.ViewModels"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        ResizeMode="CanMinimize"
+        WindowState="Maximized"
+        WindowStartupLocation="CenterOwner"
+        Title="MainWindow" Height="800" Width="1280" Closing="Window_Closing" Closed="Window_Closed" Loaded="Window_Loaded">
+    <!--<Window.DataContext>
+        <context:InputValue/>
+    </Window.DataContext>-->
+
+    <Grid Background="{DynamicResource Taskbar}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <!--Header View-->
+        <Grid Grid.Row="0" Background="DarkCyan">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+
+                <Image  Source="/image/C_88-FIBER ENERGY.png" />
+                <TextBlock Margin="20 0" FontSize="25" Text="GPMI LASER MARKING " Style="{StaticResource HeaderTextBlock}"/>
+                <TextBlock x:Name="Station_tbx" FontSize="25" Text="01" Style="{StaticResource HeaderTextBlock}"></TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" >
+                <Grid Margin="5 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock VerticalAlignment="Center" Margin="10 0" x:Name="ID_tbx" FontSize="15"/>
+                    <TextBlock Grid.Row="1" VerticalAlignment="Center" Margin="10 0" x:Name="Name_tbx" FontSize="15"/>
+                </Grid>
+                <Button x:Name="Miximize_Btn" Style="{StaticResource Button_Minimized}" Margin="5" Click="Miximize_Btn_Click"/>
+                <Button x:Name="Shutdown_Btn" Style="{StaticResource Button_Shutdown}" Margin="5" Click="Shutdown_Btn_Click"/>
+
+            </StackPanel>
+        </Grid>
+
+        <!--Header View-->
+
+        <!--Main View-->
+        <Border Grid.Row="1" Background="{StaticResource TEMAS_LIGHT_GREY}" CornerRadius="15" Margin="5 0">
+            <Grid Margin="5">
+                <Grid.Resources>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource NormalTextBlock}"/>
+                    <Style TargetType="TextBox" BasedOn="{StaticResource NormalTextBox}"/>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height=".8*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="1" Margin="5" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="7*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Output History" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                    <Button x:Name="Errorlist_btn" Content="Marking Error List" HorizontalAlignment="Right" Margin="0,5,0,5" Width="150" Click="Errorlist_btn_Click"/>
+                    <DataGrid LoadingRow="Output_Grid_LoadingRow" x:Name="Output_Grid" BorderThickness="2"  Grid.Row="2" FontSize="15" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Part ID" Width="2*" Binding="{Binding Part_ID}" />
+                            <DataGridTextColumn Header="Part Number" Width="*" Binding="{Binding Part_Number}"/>
+                            <DataGridTextColumn Header="Part Name" Width="*" Binding="{Binding Part_Name}" />
+                            <DataGridTextColumn Header="Station" Width="0.3*" Binding="{Binding Station}" />
+                            <DataGridTextColumn Header="Date Time" MinWidth="140" Width="Auto" Binding="{Binding Date_Time_Marking}" />
+                            <DataGridTextColumn Header="Marking Account" MinWidth="140" Width="Auto" Binding="{Binding Marking_Account}" />
+                            <DataGridTextColumn Header="CNC Machine" MinWidth="100" Width="Auto" Binding="{Binding CNCMachine}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+
+
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <!--Main View Left-->
+                    <Border Margin="5" CornerRadius="10" BorderThickness="1" BorderBrush="Black">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+  
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <TextBlock Text="Order Input" FontWeight="Bold" FontSize="25"/>
+                            </StackPanel>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Part Number"/>
+                                <TextBlock x:Name="PartNumber_tbx"  Grid.Column="1" IsEnabled="False" FontStyle="Italic"  Background="#FFC1ECAF"/>
+                                <TextBox x:Name="Read_PartNumber_txt" Opacity="0.9" Text="Barcode Reader..." Grid.Column="1"  FontStyle="Italic" GotFocus="Read_PartNumber_txt_GotFocus" KeyDown="Read_PartNumber_txt_KeyDown" Background="#FFC1ECAF"/>
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Part Name"/>
+                                <TextBlock x:Name="PartName_tbx" Text="{Binding Path =PartName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Grid.Column="1"/>
+                            </Grid>
+                            <Grid Grid.Row="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Version"/>
+                                <TextBlock x:Name="Version_Tbx" Text="{Binding }" Grid.Column="1"/>
+                            </Grid>
+                            <Grid Grid.Row="4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Vender Code"/>
+                                <TextBlock x:Name="Vendor_Code_tbx" Text="{Binding }" Grid.Column="1"/>
+
+                            </Grid>
+                            <Grid Grid.Row="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Order Date"/>
+                                <TextBlock x:Name="OrderDate_tbx" Text="{Binding }" Grid.Column="1"/>
+                            </Grid>
+                            <Grid Grid.Row="6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Quantity"/>
+                                <TextBlock x:Name="Quantity_tbx" Text="{Binding }" Grid.Column="1"/>
+                            </Grid>
+                        </Grid>
+
+                    </Border>
+                    <!--Main View Left-->
+
+                    <!--Main View Right-->
+                    <Border Grid.Column="1" Margin="5" CornerRadius="10" BorderThickness="1" BorderBrush="Black">
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="3*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid  Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="300"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Grid.Column="1"  x:Name="PartID_Manual_txt"  FontSize="20" Background="#FFEDE5E5" BorderBrush="White"/>
+                                <TextBlock Grid.Column="0" Text="Manual Marking" 
+                                   HorizontalAlignment="Center" 
+                                   VerticalAlignment="Top"
+                                   FontSize="25"
+                                   FontWeight="Bold"/>
+                            </Grid>
+
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="4*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Part ID" HorizontalAlignment="Center" />
+                                <TextBox x:Name="PartID_txt" Text="{Binding a}" FontSize="20" Background="#FFEDE5E5" Grid.Column="1" IsReadOnly="True" BorderBrush="White"/>
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1.5*"/>
+                                    <ColumnDefinition Width="0.8*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Marking Status" HorizontalAlignment="Left" Margin="25,0,0,0" />
+                                <Image x:Name="Laserimage_status_img"  Source="/image/lasericon.png" Grid.Column="1" Margin="10"/>
+                                <Border x:Name="Status_Border" BorderThickness="2" CornerRadius="50" BorderBrush="Black"  Grid.Column="2" Margin="10">
+                                    <TextBlock x:Name="Status_tbx" Text="---" Style="{StaticResource HeaderTextBlock}" />
+                                </Border>
+                                <Grid x:Name="NG_Comfrim_grid" Grid.Column="3" Visibility="Hidden">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="2*"/>
+                                        <RowDefinition Height="2*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Button x:Name="Read_Barcode_Again_btn" Grid.Row="1" Content=" Read Barcode " Style="{StaticResource Button_Number}"  Margin="5" Click="Read_Barcode_Again_btn_Click"/>
+                                    <Button x:Name="NG_Comfrim_btn" Grid.Row="2" Content=" NG Comfrim " Style="{StaticResource Button_Number}"  Margin="5" Click="NG_Comfrim_btn_Click"/>
+                                </Grid>
+
+                            </Grid>
+                            <TextBlock Grid.Row="3" x:Name="workingstatuslbl" VerticalAlignment="Center" />
+                            <Grid Grid.Row="4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition  Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <!--OK-->
+                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Orientation="Horizontal">
+                                    <TextBlock Text="OK" HorizontalAlignment="Left" Canvas.Left="275" Canvas.Top="10"  Foreground="Green" FontWeight="Bold" VerticalAlignment="Top"/>
+                                    <TextBox x:Name="OK_txt" Width="90" HorizontalAlignment="Left" VerticalAlignment="Top" Text="$$"/>
+                                </StackPanel>
+                                <!--Marking NG-->
+                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Orientation="Horizontal">
+                                    <TextBlock Text="NG" FontWeight="Bold" VerticalAlignment="Top" Foreground="{StaticResource TEMAS_RED}"/>
+                                    <TextBox x:Name="NG_txt" Width="79"  VerticalAlignment="Top" Text="$$"/>
+                                </StackPanel>
+                                <!--FAQ NG-->
+                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" Orientation="Horizontal">
+                                    <TextBlock Text="FQA NG" FontWeight="Bold" VerticalAlignment="Top" Foreground="{StaticResource TEMAS_RED}"/>
+                                    <TextBox x:Name="FNG_txt" Width="79"  VerticalAlignment="Top" Text="$$"/>
+                                </StackPanel>
+                            </Grid>
+
+                        </Grid>
+                    </Border>
+                    <!--Main View Right-->
+                    <!--<StackPanel >
+                        <TextBox x:Name="NCU_txt" Text="{Binding NCU}" />
+                        <TextBox x:Name="SoPO_txt" Text="{Binding MSoPO}" />
+                        <TextBox x:Name="MaSP_txt" Text="{Binding MaSP}" />
+                        <TextBox x:Name="ReviewBV_txt" Text="{Binding ReviewBV}" />
+                        <TextBox x:Name="MaKhac_txt" >
+                            <MultiBinding StringFormat="{}{0}{1}{2}{3}">
+                                <Binding Path="NCU" Mode="OneWayToSource" />
+                                <Binding Path="MSoPO" Mode="OneWay" />
+                                <Binding Path="MaSP" Mode="OneWay" />
+                                <Binding Path="ReviewBV" Mode="OneWay" />
+                            </MultiBinding>
+                        </TextBox>
+                        <Button x:Name="button" Content="Button" Click="button_Click"/>
+                    </StackPanel>-->
+                    <!--<Button Grid.Row="7" Width="150"
+                            Height="35"
+                            Command="{Binding PowerCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Status" />
+                            <Rectangle Margin="5,2,0,0"
+                            Width="10"
+                            Height="10"
+                            Fill="{Binding PowerFill}" />
+                            <AccessText Margin="25,0,0,0"
+                            Text="{Binding PowerText}" />
+                        </StackPanel>
+                    </Button>-->
+                </Grid>
+
+            </Grid>
+
+        </Border>
+        <!--Main View-->
+
+        <!--TaskBar View -->
+        <Grid Grid.Row="2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="Reconnect_Barcode_btn" Background="Transparent" Margin="10 0" Width="36" Height="24" Click="Reconnect_Barcode_btn_Click">
+                        <Canvas Width="24" Height="24">
+                            <Path x:Name="Barcode_Connection_Status" Fill="Black" Data="M4,1C2.89,1 2,1.89 2,3V7C2,8.11 2.89,9 4,9H1V11H13V9H10C11.11,9 12,8.11 12,7V3C12,1.89 11.11,1 10,1H4M4,3H10V7H4V3M3,13V18L3,20H10V18H5V13H3M14,13C12.89,13 12,13.89 12,15V19C12,20.11 12.89,21 14,21H11V23H23V21H20C21.11,21 22,20.11 22,19V15C22,13.89 21.11,13 20,13H14M14,15H20V19H14V15Z" />
+                        </Canvas>
+                    </Button>
+                    <TextBlock VerticalAlignment="Center" Margin="10 0">Barcode Laser</TextBlock>
+
+                </StackPanel>
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+
+                    <Button x:Name="Reconnect_Laser_btn" Background="Transparent" Margin="10 0" Width="36" Height="24" Click="Reconnect_Laser_btn_Click">
+                        <Canvas Width="24" Height="24">
+                            <Path x:Name="Laser_Connection_Status" Fill="Black" Data="M4,1C2.89,1 2,1.89 2,3V7C2,8.11 2.89,9 4,9H1V11H13V9H10C11.11,9 12,8.11 12,7V3C12,1.89 11.11,1 10,1H4M4,3H10V7H4V3M3,13V18L3,20H10V18H5V13H3M14,13C12.89,13 12,13.89 12,15V19C12,20.11 12.89,21 14,21H11V23H23V21H20C21.11,21 22,20.11 22,19V15C22,13.89 21.11,13 20,13H14M14,15H20V19H14V15Z" />
+                        </Canvas>
+                    </Button>
+                    <TextBlock VerticalAlignment="Center" Margin="10 0">Laser Machine</TextBlock>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Column="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock VerticalAlignment="Center" Margin="10 0">Barcode Check JIG</TextBlock>
+                    <Button x:Name="Reconnect_JIGBarcode_btn" Background="Transparent" Margin="10 0" Width="36" Height="24" Click="Reconnect_JIGBarcode_btn_Click" >
+                        <Canvas Width="24" Height="24">
+                            <Path x:Name="JIG_Barcode_Connection_Status" Fill="Black" Data="M4,1C2.89,1 2,1.89 2,3V7C2,8.11 2.89,9 4,9H1V11H13V9H10C11.11,9 12,8.11 12,7V3C12,1.89 11.11,1 10,1H4M4,3H10V7H4V3M3,13V18L3,20H10V18H5V13H3M14,13C12.89,13 12,13.89 12,15V19C12,20.11 12.89,21 14,21H11V23H23V21H20C21.11,21 22,20.11 22,19V15C22,13.89 21.11,13 20,13H14M14,15H20V19H14V15Z" />
+                        </Canvas>
+                    </Button>
+                    
+                </StackPanel>
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock VerticalAlignment="Center" Margin="10 0">PLC COM Connect</TextBlock>
+                    <Button x:Name="Reconnect_PLC_btn" Background="Transparent" Margin="10 0" Width="36" Height="24" Click="Reconnect_PLC_btn_Click">
+                        <Canvas Width="24" Height="24">
+                            <Path x:Name="PLC_Connection_Status" Fill="Black" Data="M4,1C2.89,1 2,1.89 2,3V7C2,8.11 2.89,9 4,9H1V11H13V9H10C11.11,9 12,8.11 12,7V3C12,1.89 11.11,1 10,1H4M4,3H10V7H4V3M3,13V18L3,20H10V18H5V13H3M14,13C12.89,13 12,13.89 12,15V19C12,20.11 12.89,21 14,21H11V23H23V21H20C21.11,21 22,20.11 22,19V15C22,13.89 21.11,13 20,13H14M14,15H20V19H14V15Z" />
+                        </Canvas>
+                    </Button>
+                    
+                </StackPanel>
+            </Grid>
+            <StackPanel HorizontalAlignment="Center" Grid.Column="1" Orientation="Horizontal" Margin="5">
+                <Button x:Name="LaserTest_btn" Margin="10 0" Style="{DynamicResource Button_TestLaser}" Click="LaserTest_btn_Click" />
+                <Button x:Name="ManualTest_btn" Margin="10 0" Style="{DynamicResource ButtonManual}" Click="ManualTest_btn_Click" />
+                <Button x:Name="Auto_btn" Margin="10 0"  Style="{DynamicResource ButtonLoad}" Click="ResetError_btn_Click" />
+                <Button x:Name="Setting_btn" Style="{StaticResource ButtonSetting}" Click="Setting_btn_Click"/>
+            </StackPanel>
+        </Grid>
+        <!--TaskBar View -->
+    </Grid>
+</Window>

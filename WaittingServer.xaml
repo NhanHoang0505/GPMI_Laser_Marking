@@ -1,0 +1,22 @@
+﻿<Window x:Class="GPMI_Laser_Marking.WaittingServer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GPMI_Laser_Marking"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True"
+        Topmost="True"
+        WindowStartupLocation="CenterScreen"      
+        Title="WaittingServer" Height="250" Width="450">
+    <Border Opacity="0.8" CornerRadius="20" Background="White" BorderThickness="1">
+        <StackPanel Margin="5" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Image Height="150" Width="150" Source="/gpmi.ico"/>
+            <TextBlock   FontWeight="Black" Foreground="DarkGreen" x:Name="text" FontSize="36" Loaded="text_Loaded">Waitting For Server....</TextBlock>
+            <TextBlock HorizontalAlignment="Center">by Temas.........</TextBlock>
+        </StackPanel>
+    </Border>
+
+</Window>
