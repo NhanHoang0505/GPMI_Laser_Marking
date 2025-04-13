@@ -49,7 +49,7 @@ namespace GPMI_Laser_Marking.View
         }
         public BoxManager(string Order)
         {
-            Items=new  ObservableCollection<PackagingManager>();
+            Items = new ObservableCollection<PackagingManager>();
             OItems = new ObservableCollection<OutputMarking>();
             InitializeComponent();
             this.DataContext = this;
@@ -67,18 +67,7 @@ namespace GPMI_Laser_Marking.View
 
         private void OrderNo_txt_KeyDown(object sender, KeyEventArgs e)
         {
-            //if (e.Key == Key.Enter)
-            //{
-            //    using (var db = new InputContext())
-            //    {
-            //        var newpackaManager = db.packagingManagers.Where(p => p.Order_No == OrderNo_txt.Text);
-            //        Items.Clear();
-            //        foreach (var item in newpackaManager)
-            //        {
-            //            Items.Add(item);
-            //        }
-            //    }            
-            //}
+
         }
 
         private void Packaging_lbx_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -87,13 +76,13 @@ namespace GPMI_Laser_Marking.View
             {
                 PackagingID_txt.Text = SelectedItem.QRCODE_ID;
             }
-                UpdatelistPartID();
+            UpdatelistPartID();
         }
         private void UpdatelistPartID()
         {
             if (PackagingID_txt.Text != "" || PackagingID_txt != null)
             {
-                int count =1;
+                int count = 1;
                 using (var db = new InputContext())
                 {
                     var Output = db.outputMarkings.Where(p => p.QR_CodeID == PackagingID_txt.Text);
@@ -109,7 +98,7 @@ namespace GPMI_Laser_Marking.View
 
         private void PartID_lbx_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (SelectedOItem!=null)
+            if (SelectedOItem != null)
             {
                 SeletedPartID_txt.Text = SelectedOItem.Part_ID;
             }
@@ -117,10 +106,10 @@ namespace GPMI_Laser_Marking.View
             {
                 SeletedPartID_txt.Text = string.Empty;
             }
-              
+
         }
 
-        public string ChooseQRCodeID { get;private set; }
+        public string ChooseQRCodeID { get; private set; }
         private void ChooseBox_btn_Click(object sender, RoutedEventArgs e)
         {
             ChooseQRCodeID = PackagingID_txt.Text;
@@ -129,7 +118,7 @@ namespace GPMI_Laser_Marking.View
 
         private void UnBoxAll_btn_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedItem==null)
+            if (SelectedItem == null)
             {
                 return;
             }
@@ -151,7 +140,7 @@ namespace GPMI_Laser_Marking.View
                     item.CurrentPCS = 0;
                     item.paStatus = "Edited";
                 }
-               
+
                 var newpackaManager = db.packagingManagers.Where(p => p.Order_No == SelectedItem.Order_No).ToList();
                 Items.Clear();
                 foreach (var item in newpackaManager)
@@ -166,53 +155,49 @@ namespace GPMI_Laser_Marking.View
 
         private void UnBox1Part_Click(object sender, RoutedEventArgs e)
         {
-            Unbox();
-            
-        }
-
-        private void UnBoxNGPart_Click(object sender, RoutedEventArgs e)
-        {
-            UnboxNG();
-        }
-        private void UnboxNG()
-        {
-            if (SelectedOItem != null)
+            LoginEnter loginEnter = new LoginEnter();
+            loginEnter.ShowDialog();
+            if (loginEnter.LoginAccountAdmin != string.Empty)
             {
-                using (var db = new InputContext())
-                {
-                    var unboxitems = db.outputMarkings.Where(p => p.Part_ID == SelectedOItem.Part_ID);
-                    foreach (var item in unboxitems)
-                    {
-                        item.Order_No = string.Empty;
-                        item.Pcs_in_Box = 0;
-                        item.FQA_Status = "NG";
-                        item.Box_No = 0;
-                        item.QR_CodeID = string.Empty;
-                        item.Order_Quantity = 0;
-                        System.Windows.Forms.MessageBox.Show(item.Part_ID);
-                    }
-                    db.SaveChanges();
-                    var unboxQR = db.packagingManagers.Where(p => p.QRCODE_ID == PackagingID_txt.Text);
-                    foreach (var item in unboxQR)
-                    {
-                        if (item.CurrentPCS > 0)
-                        {
-                            item.CurrentPCS--;
-                        }
-                        item.paStatus = "Edited";
-                        item.CurrentPCS = db.outputMarkings.Where(p => p.QR_CodeID == PackagingID_txt.Text).Count();
-                    }
-                    db.SaveChanges();
-                    var newpackaManager = db.packagingManagers.Where(p => p.Order_No == SelectedItem.Order_No).ToList();
-                    Items.Clear();
-                    foreach (var item in newpackaManager)
-                    {
-                        Items.Add(item);
-                    }
 
-                    db.SaveChanges();
+                {
+                    using (var db = new InputContext())
+                    {
+                        var unboxitems = db.outputMarkings.Where(p => p.Part_ID == SelectedOItem.Part_ID);
+                        foreach (var item in unboxitems)
+                        {
+                            item.Order_No = string.Empty;
+                            item.Pcs_in_Box = 0;
+                            item.FQA_Status = "NG";
+                            item.Box_No = 0;
+                            item.QR_CodeID = string.Empty;
+                            item.Order_Quantity = 0;
+                            System.Windows.Forms.MessageBox.Show(item.Part_ID);
+                        }
+                        db.SaveChanges();
+                        var unboxQR = db.packagingManagers.Where(p => p.QRCODE_ID == PackagingID_txt.Text);
+                        foreach (var item in unboxQR)
+                        {
+                            if (item.CurrentPCS > 0)
+                            {
+                                item.CurrentPCS--;
+                            }
+                            item.paStatus = "Edited";
+                            item.CurrentPCS = db.outputMarkings.Where(p => p.QR_CodeID == PackagingID_txt.Text).Count();
+                        }
+                        db.SaveChanges();
+                        var newpackaManager = db.packagingManagers.Where(p => p.Order_No == SelectedItem.Order_No).ToList();
+                        Items.Clear();
+                        foreach (var item in newpackaManager)
+                        {
+                            Items.Add(item);
+                        }
+
+                        db.SaveChanges();
+                    }
+                    UpdatelistPartID();
                 }
-                UpdatelistPartID();
+
             }
         }
         private void Unbox()
@@ -225,7 +210,7 @@ namespace GPMI_Laser_Marking.View
                     foreach (var item in unboxitems)
                     {
                         item.Order_No = string.Empty;
-                        item.Pcs_in_Box = 0;                
+                        item.Pcs_in_Box = 0;
                         item.Box_No = 0;
                         item.QR_CodeID = string.Empty;
                         item.Order_Quantity = 0;
@@ -233,7 +218,7 @@ namespace GPMI_Laser_Marking.View
                     }
                     db.SaveChanges();
                     var unboxQR = db.packagingManagers.Where(p => p.QRCODE_ID == PackagingID_txt.Text).FirstOrDefault();
-                    if (unboxQR!= null)
+                    if (unboxQR != null)
                     {
                         unboxQR.paStatus = "Edited";
                         var a = db.outputMarkings.Where(p => p.QR_CodeID == PackagingID_txt.Text).ToList();
@@ -269,7 +254,7 @@ namespace GPMI_Laser_Marking.View
                     var newpart =
                     (from outMarking in db.outputMarkings
                      where outMarking.Part_ID == Replace_Part_txt.Text
-                     && (outMarking.QR_CodeID == string.Empty || outMarking.QR_CodeID==null)
+                     && (outMarking.QR_CodeID == string.Empty || outMarking.QR_CodeID == null)
                       && (outMarking.FQA_Status == "OK" || outMarking.FQA_Status == "Rework")
                      select outMarking).FirstOrDefault();
 
@@ -334,9 +319,9 @@ namespace GPMI_Laser_Marking.View
                 {
                     var oldpart =
                      (from outMarking in db.outputMarkings
-                     where outMarking.Part_ID == SelectedOItem.Part_ID
-                     && (outMarking.QR_CodeID == PackagingID_txt.Text)
-                     select outMarking).FirstOrDefault();
+                      where outMarking.Part_ID == SelectedOItem.Part_ID
+                      && (outMarking.QR_CodeID == PackagingID_txt.Text)
+                      select outMarking).FirstOrDefault();
 
                     var newpart =
                     (from outMarking in db.outputMarkings
@@ -346,9 +331,9 @@ namespace GPMI_Laser_Marking.View
                      select outMarking).FirstOrDefault();
                     bool checkold = false;
                     bool checknew = false;
-                    if (oldpart!= null)
+                    if (oldpart != null)
                     {
-                        checkold = true; 
+                        checkold = true;
                     }
                     else
                     {
@@ -362,7 +347,7 @@ namespace GPMI_Laser_Marking.View
                     {
                         System.Windows.Forms.MessageBox.Show($"New Part is Not True");
                     }
-                    if (checkold&& checknew)
+                    if (checkold && checknew)
                     {
                         if (newpart.Part_Number != newpart.Part_Number)
                         {
@@ -396,7 +381,7 @@ namespace GPMI_Laser_Marking.View
 
         private void PartID_lbx_LostFocus(object sender, RoutedEventArgs e)
         {
-          
+
         }
     }
 }

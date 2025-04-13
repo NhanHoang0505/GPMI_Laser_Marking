@@ -65,14 +65,16 @@
                         <RowDefinition Height="7*"/>
                     </Grid.RowDefinitions>
                     <TextBlock Text="Output History" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
-                    <DataGrid x:Name="Output_Grid" BorderThickness="2"  Grid.Row="2" FontSize="15" AutoGenerateColumns="False" CanUserAddRows="False" LoadingRow="Output_Grid_LoadingRow">
+                    <DataGrid x:Name="Output_Grid" BorderThickness="2"  Grid.Row="2" FontSize="15" AutoGenerateColumns="False" CanUserAddRows="False" LoadingRow="Output_Grid_LoadingRow" SelectionChanged="Output_Grid_SelectionChanged">
                         <DataGrid.Columns>
-  
+
                             <DataGridTextColumn Header="Part Number" Width="*" Binding="{Binding Part_Number}"/>
                             <DataGridTextColumn Header="Part ID" Width="2.2*" Binding="{Binding Part_ID}"/>
                             <DataGridTextColumn Header="FQA Status" Width="*" Binding="{Binding FQA_Status}"/>
                             <DataGridTextColumn Header="Date Time" Width="*" Binding="{Binding Date_Time_FQA}"/>
                             <DataGridTextColumn Header="FQA Account" Width="*" Binding="{Binding FQA_Account}"/>
+                            <DataGridTextColumn Header="Rework Content" Binding="{Binding ReworkContent}" Width="*"/>
+                            <DataGridTextColumn Header="NG reason" Binding="{Binding NGReason}" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
@@ -101,7 +103,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="2*"/>
-                                   
+
                                 </Grid.ColumnDefinitions>
                                 <TextBlock x:Name="OrderNo_tbx"  Text="Order No"/>
                                 <TextBlock x:Name="OrderNo_tbl" Text="{Binding}"  Grid.Column="1"/>
@@ -111,7 +113,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="2*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="Part Number"/> 
+                                <TextBlock Text="Part Number"/>
                                 <TextBlock x:Name="PartNumber_tbx" Text="{Binding}"  Grid.Column="1"/>
                             </Grid>
                             <Grid Grid.Row="3">
@@ -201,7 +203,7 @@
                             </Grid>
                             <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
                                 <TextBlock Text="OK" HorizontalAlignment="Left"  Foreground="Green" FontWeight="Bold"/>
-                                <TextBox x:Name="OK_txt" IsReadOnly="True" Width="100" />
+                                <TextBox x:Name="OK_txt" IsReadOnly="True" Width="100" TextChanged="OK_txt_TextChanged" />
                                 <TextBlock Margin="30">|</TextBlock>
                                 <TextBlock Text="NG" FontWeight="Bold" Foreground="{StaticResource TEMAS_RED}"/>
                                 <TextBox x:Name="NG_txt" IsReadOnly="True" Width="100" />

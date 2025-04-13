@@ -82,7 +82,7 @@
                     <RowDefinition Height="35"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                
+
                 <Grid >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60"/>
@@ -121,7 +121,7 @@
                     </ListView.View>
                 </ListView>
             </Grid>
-            
+
         </Border>
     </Grid>
 </Window>

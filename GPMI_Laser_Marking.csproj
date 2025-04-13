@@ -126,19 +126,19 @@
     </Reference>
     <Reference Include="MLComponent, Version=5.9.10.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\MLComponent.dll</HintPath>
+      <HintPath>D:\2. DU AN\1. GPMI\2. GPMI_PACKAGING\mlv5_dll\MLComponent.dll</HintPath>
     </Reference>
     <Reference Include="MLComponent.XmlSerializers, Version=5.9.10.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\MLComponent.XmlSerializers.dll</HintPath>
+      <HintPath>D:\2. DU AN\1. GPMI\2. GPMI_PACKAGING\mlv5_dll\MLComponent.XmlSerializers.dll</HintPath>
     </Reference>
     <Reference Include="MLPreviewComponent, Version=5.9.9.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\MLPreviewComponent.dll</HintPath>
+      <HintPath>D:\2. DU AN\1. GPMI\2. GPMI_PACKAGING\mlv5_dll\MLPreviewComponent.dll</HintPath>
     </Reference>
     <Reference Include="MLPreviewComponent.XmlSerializers, Version=5.9.9.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\MLPreviewComponent.XmlSerializers.dll</HintPath>
+      <HintPath>D:\2. DU AN\1. GPMI\2. GPMI_PACKAGING\mlv5_dll\MLPreviewComponent.XmlSerializers.dll</HintPath>
     </Reference>
     <Reference Include="MLSpecialEdit, Version=5.9.9.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -211,6 +211,9 @@
     <Compile Include="Models\NGMarking.cs" />
     <Compile Include="Models\OutputMarking.cs" />
     <Compile Include="Models\PackagingManager.cs" />
+    <Compile Include="NGContentDialog.xaml.cs">
+      <DependentUpon>NGContentDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NGListxaml.xaml.cs">
       <DependentUpon>NGListxaml.xaml</DependentUpon>
     </Compile>
@@ -219,6 +222,9 @@
     </Compile>
     <Compile Include="PrintPreview.Designer.cs">
       <DependentUpon>PrintPreview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReworkContentDialog.xaml.cs">
+      <DependentUpon>ReworkContentDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="SaToPrint.cs" />
     <Compile Include="SetupIP.cs">
@@ -288,6 +294,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="NGContentDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="NGListxaml.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -309,6 +319,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ResourceDictionarys\TextBlocks.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ReworkContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

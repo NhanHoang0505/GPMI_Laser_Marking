@@ -4,14 +4,12 @@ using System.Collections.ObjectModel;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace GPMI_Laser_Marking
 {
-    /// <summary>
-    /// Interaction logic for FQAWindown.xaml
-    /// </summary>
-    ///
+
     public sealed partial class Computer : ObservableOject
     {
         private int _ok;
@@ -86,15 +84,15 @@ namespace GPMI_Laser_Marking
                             PartName_tbx.Text = outputMarking.Part_Name;
                             Version_tbx.Text = outputMarking.Version;
                             VenderCode_tbx.Text = outputMarking.Vendor_Code;
-                            Quantity_tbx.Text = $"{ outputMarking.Order_Quantity}";
-                            if (outputMarking.Order_Date!= null)
+                            Quantity_tbx.Text = $"{outputMarking.Order_Quantity}";
+                            if (outputMarking.Order_Date != null)
                             {
                                 OrderDate_tbx.Text = outputMarking.Order_Date.Value.ToShortDateString();
                             }
                             else
                             {
                                 OrderDate_tbx.Text = "";
-                            }                                         
+                            }
                             MyComputer.OK = db.outputMarkings.Count(t => t.Order_No == outputMarking.Order_No && (t.FQA_Status == "OK" || t.FQA_Status == "Rework"));
                             MyComputer.NG = db.outputMarkings.Count(t => t.Order_No == outputMarking.Order_No && t.FQA_Status == "NG");
                             NG_btn.IsEnabled = true;
@@ -167,7 +165,7 @@ namespace GPMI_Laser_Marking
                     var ok = db.outputMarkings.SingleOrDefault(p => p.Part_ID == ReadPartID_txt.Text);
                     if (ok != null)
                     {
-                        if (string.IsNullOrEmpty( ok.FQA_Status))
+                        if (string.IsNullOrEmpty(ok.FQA_Status))
                         {
                             ok.Date_Time_FQA = DateTime.Now;
                             ok.FQA_Status = "OK";
@@ -198,6 +196,7 @@ namespace GPMI_Laser_Marking
         {
             ResetRead();
         }
+        // Tạo class mới
 
         private void NG_btn_Click(object sender, RoutedEventArgs e)
         {
@@ -210,27 +209,39 @@ namespace GPMI_Laser_Marking
                     {
                         if (ok.FQA_Status == null)
                         {
-                            ok.Date_Time_FQA = DateTime.Now;
-                            ok.FQA_Status = "NG";
-                            ok.FQA_Account = ID_tbx.Text;
-                            db.SaveChanges();
-                            MyComputer.NG++;
-                            fqalist.Add(ok);
+                            // Hiển thị hộp thoại nhập lý do NG
+                            NGContentDialog ngDialog = new NGContentDialog();
+                            if (ngDialog.ShowDialog() == true)
+                            {
+                                ok.Date_Time_FQA = DateTime.Now;
+                                ok.FQA_Status = "NG";
+                                ok.FQA_Account = ID_tbx.Text;
+                                ok.NGContent = ngDialog.NGContent; // <-- Lưu nội dung NG
+                                db.SaveChanges();
+                                MyComputer.NG++;
+                                fqalist.Add(ok);
+                            }
                         }
                         else
                         {
-                            System.Windows.Forms.MessageBox.Show($"This Part Already Checked - {ok.FQA_Status}\r\n Login for Change Part to NG");
+                            System.Windows.Forms.MessageBox.Show($"This Part Already Checked - {ok.FQA_Status}\r\nLogin for Change Part to NG");
                             LoginEnter loginEnter = new LoginEnter();
                             loginEnter.ShowDialog();
                             if (loginEnter.LoginAccountAdmin != string.Empty)
                             {
-                                ok.Date_Time_FQA = DateTime.Now;
-                                ok.FQA_Status = "NG";
-                                ok.FQA_Account = loginEnter.LoginAccountAdmin;
-                                db.SaveChanges();
-                                MyComputer.NG++;
-                                MyComputer.OK--;
-                                fqalist.Add(ok);
+                                // Hiển thị hộp thoại nhập lý do NG
+                                NGContentDialog ngDialog = new NGContentDialog();
+                                if (ngDialog.ShowDialog() == true)
+                                {
+                                    ok.Date_Time_FQA = DateTime.Now;
+                                    ok.FQA_Status = "NG";
+                                    ok.FQA_Account = loginEnter.LoginAccountAdmin;
+                                    ok.NGContent = ngDialog.NGContent; // <-- Lưu nội dung NG
+                                    db.SaveChanges();
+                                    MyComputer.NG++;
+                                    MyComputer.OK--;
+                                    fqalist.Add(ok);
+                                }
                             }
                         }
                     }
@@ -247,10 +258,13 @@ namespace GPMI_Laser_Marking
             ResetRead();
         }
 
+
         private void Window_Closed(object sender, EventArgs e)
         {
             Application.Current.MainWindow.Show();
         }
+
+
 
         private void Rewwork_btn_Click(object sender, RoutedEventArgs e)
         {
@@ -258,29 +272,34 @@ namespace GPMI_Laser_Marking
             {
                 using (var db = new InputContext())
                 {
-                    //var count = db.outputMarkings.Count(t => t.Order_No == OrderNo_tbl.Text && (t.FQA_Status == "OK" || t.FQA_Status == "Rework"));
-                    //if (count >= int.Parse(Quantity_tbx.Text))
-                    //{
-                    //    System.Windows.Forms.MessageBox.Show("Quantity is enough ! ");
-                    //    return;
-                    //}
-                    var ok = db.outputMarkings.FirstOrDefault(p => p.Part_ID == ReadPartID_txt.Text);
-                    if (ok != null)
+                    LoginEnter loginEnter = new LoginEnter();
+                    loginEnter.ShowDialog();
+                    if (loginEnter.LoginAccountAdmin != string.Empty)
                     {
-                        if (ok.FQA_Status == "NG")
+                        var ok = db.outputMarkings.FirstOrDefault(p => p.Part_ID == ReadPartID_txt.Text);
+                        if (ok != null)
                         {
-                            ok.Date_Time_FQA = DateTime.Now;
-                            ok.FQA_Status = "Rework";
-                            ok.FQA_Account = ID_tbx.Text;
-                            db.SaveChanges();
-                            MyComputer.OK++;
-                            MyComputer.NG--;
-                            fqalist.Add(ok);
+                            if (ok.FQA_Status == "NG")
+                            {
+                                // Add dialog to enter rework content
+                                ReworkContentDialog reworkDialog = new ReworkContentDialog();
+                                if (reworkDialog.ShowDialog() == true)
+                                {
+                                    ok.Date_Time_FQA = DateTime.Now;
+                                    ok.FQA_Status = "Rework";
+                                    ok.ReworkContent = reworkDialog.ReworkContent;
+                                    ok.FQA_Account = loginEnter.LoginAccountAdmin; // Use admin ID
+                                    db.SaveChanges();
+                                    MyComputer.OK++;
+                                    MyComputer.NG--;
+                                    fqalist.Add(ok);
+                                }
+                            }
                         }
-                    }
-                    else
-                    {
-                        System.Windows.Forms.MessageBox.Show("This Part Not True");
+                        else
+                        {
+                            System.Windows.Forms.MessageBox.Show("This Part Not True");
+                        }
                     }
                 }
             }
@@ -324,7 +343,7 @@ namespace GPMI_Laser_Marking
                         VenderCode_tbx.Text = orderno.Vendor_Code;
                         OrderDate_tbx.Text = orderno.Order_Date.ToShortDateString();
                         Quantity_tbx.Text = orderno.Order_Quantity.ToString();
-                        MyComputer.OK = db.outputMarkings.Count(t=>t.FQA_Status == "OK" || t.FQA_Status == "Rework");
+                        MyComputer.OK = db.outputMarkings.Count(t => t.FQA_Status == "OK" || t.FQA_Status == "Rework");
                         MyComputer.NG = db.outputMarkings.Count(t => t.FQA_Status == "NG");
                         OrderNo_tbl.IsEnabled = false;
                         ReadPartID_txt.IsEnabled = true;
@@ -345,6 +364,16 @@ namespace GPMI_Laser_Marking
         private void Output_Grid_LoadingRow(object sender, System.Windows.Controls.DataGridRowEventArgs e)
         {
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+
+        private void Output_Grid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void OK_txt_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }
